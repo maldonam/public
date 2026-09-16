@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cashy Oversight Challenge</title>
+  <meta name="description" content="A UNHCR Innovation hackathon challenge: how to design, measure and monitor appropriate reliance so caseworkers keep overriding an AI targeting recommendation when it is wrong.">
+  <meta name="theme-color" content="#0B5FA5">
+  <meta property="og:title" content="Cashy Oversight Challenge">
+  <meta property="og:description" content="Human oversight of AI-supported cash assistance targeting. A 48 to 72 hour hackathon challenge posed by UNHCR Innovation.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#about">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <img src="assets/cashy-icon.svg" alt="" width="30" height="30">
+      <span>Cashy Oversight Challenge<small>UNHCR Innovation</small></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+    <nav class="primary" id="primary-nav" aria-label="Sections">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#challenge">Challenge</a></li>
+        <li><a href="#tracks">Tracks</a></li>
+        <li><a href="#data">Data</a></li>
+        <li><a href="#experiment">Experiment</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#team">Team</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Data &amp; Innovation for Refugee Inclusion Hackathon</div>
+      <h1>Keep the human override alive in AI-assisted cash targeting</h1>
+      <p class="lead">Cashy recommends which displaced households receive cash. A caseworker decides. Design how that caseworker keeps saying no when the AI is wrong, and how the institution can see when they stop.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#logistics">Register <span class="todo">TODO link</span></a>
+        <a class="btn btn-secondary" href="#challenge">Read the challenge</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img class="mark" src="assets/cashy-icon.svg" alt="Cashy mark: an open ring with a check, the caseworker's confirmation" width="300" height="300">
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section style="padding-top:0;border-top:0">
+  <div class="wrap">
+    <div class="stats" aria-label="Headline results of the Cashy experiment">
+      <div class="stat">
+        <div class="value">96.2<small>%</small> <span class="arrow">&rarr;</span> 66.7<small>%</small></div>
+        <div class="label">Correct override of a flawed recommendation, without and with Responsible-AI statements on screen</div>
+      </div>
+      <div class="stat">
+        <div class="value">29.5 <small>pp</small></div>
+        <div class="label">Risk difference in correct override (95% CI 11.9 to 47.0, p = .007)</div>
+      </div>
+      <div class="stat">
+        <div class="value">83.1<small>%</small> <span class="arrow">&rarr;</span> 68.9<small>%</small></div>
+        <div class="label">End-to-end decision accuracy against the operation's own determination</div>
+      </div>
+      <div class="stat">
+        <div class="value">8 <small>of 12</small></div>
+        <div class="label">Flawed recommendations accepted under the statements that would have withheld assistance from an eligible household</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Why a caseworker's judgment is the hardest of any AI-assisted decision</h2>
+      <p>Targeting decides which forcibly displaced households receive scarce cash assistance. In the UNHCR country operation in Latin America behind this challenge, a caseworker's targeting assessment determines whether a household is included in or excluded from the programme. Machine-learning prediction increasingly informs that decision: the model produces a shortlist and humanitarian experts refine it case by case. Because an error decides who receives assistance, that review is required to be rigorous.</p>
+    </div>
+    <ul class="features">
+      <li>
+        <h4>No feedback</h4>
+        <p>The caseworker never learns whether a household was correctly included or excluded, so the judgment cannot be corrected by experience.</p>
+      </li>
+      <li>
+        <h4>No contest</h4>
+        <p>The affected household is absent from the decision and cannot contest it, so the caseworker is the only check on the recommendation.</p>
+      </li>
+      <li>
+        <h4>Rationed assistance</h4>
+        <p>Every wrongful inclusion is someone else's exclusion. One accepted error costs two households.</p>
+      </li>
+    </ul>
+
+    <div class="cols" style="margin-top:56px">
+      <div class="prose">
+        <h3>What UNHCR built</h3>
+        <p>Cashy is a prediction-based decision-support prototype built in the operation's data-collection platform, KoboToolbox. Two engines share the work. The <strong>answer engine</strong>, an AutoML tabular model (AutoGluon) trained on about 19,900 historical Scorecard records, produces the vulnerability score, the vulnerability category and the include-or-exclude recommendation. The <strong>reasoning engine</strong>, a large language model fed the same anonymized household data, writes the case summary, ranking and vulnerability narrative shown beside that answer.</p>
+        <p>On a held-out, class-balanced test set of 1,828 records, Cashy reproduces the Scorecard score almost exactly (R&sup2; = 0.9998, MAE 0.03 points) and the vulnerability category (accuracy 99.6%), but predicts the include-or-exclude determination only weakly (accuracy 67.6%, AUC 0.70), erring towards inclusion (recall 82% for inclusion, 53% for exclusion). Eligibility depends on criteria outside the features, such as resource availability.</p>
+      </div>
+      <div class="prose">
+        <h3>What the experiment found</h3>
+        <p>In a randomized between-subjects experiment, 31 caseworkers each assessed five real, already-decided households in Cashy, with or without Responsible-AI statements on the decision screen: a Process-of-Thought panel describing how the system reasons in general and a Process-Guarantees panel promising transparency, accountability and responsibility. Neither panel said anything about the household under review.</p>
+        <p>Where Cashy contradicted the operation's own determination, caseworkers without the statements overrode it on 96.2% of assessments; caseworkers with the statements, on 66.7%. Nobody in either arm overrode a sound recommendation. Both arms rated the flawed answers below their reasoning by the same margin, so the statements changed the decision, not the judgment behind it. Post-session ratings against the UN system's AI principles did not register the loss. <strong>A statement about the system's conduct worked as a cue about its competence, and no rating revealed the loss of oversight. Only behavior did.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGE -->
+<section id="challenge">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The challenge</h2>
+    </div>
+    <div class="question">
+      <div class="tag">How might we</div>
+      <p>design, measure and monitor appropriate reliance so that the caseworker who stands between an AI recommendation and a displaced household keeps overriding the system when it is wrong, and so that the institution can see when that oversight erodes?</p>
+    </div>
+    <div class="cols" style="margin-top:44px">
+      <div class="prose">
+        <p>The stakes are concrete. At the rates observed, every 1,000 discordant cases would carry about 295 more decisions against the operation's own standard, and under a fixed budget each wrongful inclusion is someone else's exclusion.</p>
+        <p>Explanations, cognitive forcing and uncertainty displays act on the person at the moment of decision. What the operation lacks are instruments that act on the record, so that a fall in correct override becomes visible before a system reaches a consequential decision and stays visible in production.</p>
+      </div>
+      <div>
+        <h3>Starting points, not limits</h3>
+        <ol class="steps" style="grid-template-columns:1fr;gap:18px">
+          <li><h4>Keep Responsible-AI statements off the decision screen</h4><p>Put them in training and documentation instead.</p></li>
+          <li><h4>Run an override audit before deployment</h4><p>Measure correct override on adjudicated cases before a system reaches a consequential decision.</p></li>
+          <li><h4>Record override in production</h4><p>So a falling rate is visible to a named owner over time.</p></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKS -->
+<section id="tracks">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What you can build</h2>
+      <p>This is a 48 to 72 hour hackathon. Design with an innovation mindset, but stay on the research question: what changes what a caseworker does with an AI recommendation, and how can the institution see it. Solutions may combine any of the following.</p>
+    </div>
+    <div class="tracks">
+      <div class="track featured">
+        <span class="kind">Prototype</span>
+        <h3>An instrumented targeting prototype</h3>
+        <p>A Cashy-like model on the synthetic sample (score and category reproduction, eligibility prediction with calibrated uncertainty, per-case feature attribution) wrapped in a review screen that shows reasoning and answer as separate outputs, requires each to be endorsed on its own, and logs agreement, override, the reasons given and the reasoning-answer rating gap for every assessment.</p>
+      </div>
+      <div class="track">
+        <span class="kind">Toolkit</span>
+        <h3>An override audit toolkit</h3>
+        <p>A reusable protocol and code to select adjudicated cases, collect the AI-assisted decision blind, reveal the determination, and score override. Returns the appropriate-reliance decomposition and end-to-end accuracy with confidence intervals, handles clustering by participant, and tells an operation how many caseworkers and cases it needs.</p>
+      </div>
+      <div class="track">
+        <span class="kind">Design + experiment</span>
+        <h3>Decision-screen designs and an experiment plan</h3>
+        <p>Interface variants that keep Responsible-AI statements off the decision screen, separate the Process-of-Thought and Process-Guarantees panels, or test cognitive-forcing, uncertainty or verifiable case-level cues, each with a pre-specified confirmatory contrast and minimum detectable effect.</p>
+      </div>
+      <div class="track">
+        <span class="kind">Dashboard</span>
+        <h3>A production override monitor</h3>
+        <p>A Power BI compatible dashboard that records override in production, tracks correct-override and over-reliance rates over time, by office, vulnerability band and error direction, and raises a falling override rate as an event a named owner must explain.</p>
+      </div>
+      <div class="track">
+        <span class="kind">Governance</span>
+        <h3>Behavior-first governance instruments</h3>
+        <p>Methods that combine principle ratings, model cards and self-assessment checklists with behavioral evidence, so a system is judged on how it is used and not only on how it is perceived. Includes early indicators such as unprompted endorsement in open comments, which went with four times the over-reliance.</p>
+      </div>
+      <div class="track">
+        <span class="kind">Research</span>
+        <h3>Research designs for the follow-up</h3>
+        <p>An independent expert panel rating each answer and reasoning against the case file, a second coder for the comments, a participatory study with displaced households who never see the decision made about them, or a replication in another operation or domain.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA -->
+<section id="data">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Data</h2>
+      <p>The dataset is a synthetic sample generated from the historical Scorecard corpus on which Cashy's answer engine was trained. It contains no real household. It preserves the Scorecard's structure, the value sets of each variable and the score arithmetic, so that a Cashy-like model can be built and instrumented on it, but it is not a faithful copy of the operation's distribution.</p>
+      <p><a class="btn btn-primary" href="data/S8.synthetic_cashy_sample.csv" download>Download S8 synthetic sample (CSV, 1,900 rows)</a></p>
+    </div>
+
+    <div class="notice" role="note">
+      <span aria-hidden="true" style="font-family:var(--mono);color:var(--warn);font-weight:600">!</span>
+      <div>
+        <strong>Do not benchmark eligibility on this sample</strong>
+        <p>In the synthetic sample eligibility is almost unrelated to the score (mean FinalScore 28.7 for INCLUSION against 27.5 for EXCLUSION, and every vulnerability band contains both outcomes). This reproduces, in exaggerated form, what the real data showed. Use the sample to build, instrument and test the workflow, not to claim model performance against the 67.6% reported for the real held-out set.</p>
+      </div>
+    </div>
+
+    <div class="charts" id="charts">
+      <div class="chart wide">
+        <h4>Households assessed per month</h4>
+        <p class="sub">Synthetic sample, June 2023 to July 2024. Bars show all households; the highlighted segment shows those recorded as INCLUSION.</p>
+        <div data-chart="month"></div>
+        <div class="legend"><span style="--sw:var(--accent-2)">All households</span><span style="--sw:var(--accent)">INCLUSION</span></div>
+      </div>
+      <div class="chart">
+        <h4>Vulnerability category</h4>
+        <p class="sub">Banding of FinalScore. Count of households per band.</p>
+        <div data-chart="vuln"></div>
+      </div>
+      <div class="chart">
+        <h4>Eligibility status (Elegibilidad)</h4>
+        <p class="sub">Six recorded values; the two "Elegible" values map to INCLUSION (427, 22.5%).</p>
+        <div data-chart="elig"></div>
+      </div>
+      <div class="chart">
+        <h4>FinalScore distribution</h4>
+        <p class="sub">Households per 5-point band. Highlighted segment: INCLUSION. The two outcomes overlap across the whole range.</p>
+        <div data-chart="score"></div>
+        <div class="legend"><span style="--sw:var(--accent-2)">All households</span><span style="--sw:var(--accent)">INCLUSION</span></div>
+      </div>
+      <div class="chart">
+        <h4>Field office (anonymized)</h4>
+        <p class="sub">Seven offices plus 21 blank rows. Inclusion rates range from 17% to 26%.</p>
+        <div data-chart="office"></div>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>Structure</h3>
+        <p>1,900 rows and 26 columns; one row is one household assessed at a targeting interview. Columns fall in five blocks: eight Scorecard <strong>factor scores</strong> (four Demographics, four Needs and Coping), each taking three or four discrete values between 1.0 and 3.25 where a higher value marks a more vulnerable profile; <strong>household attributes</strong>; three <strong>administrative flags</strong> taking 0 or &plusmn;500; <strong>aggregated scores</strong>; and <strong>outcomes</strong>.</p>
+        <p><strong>Score arithmetic.</strong> FinalScore equals Demographics_Score plus NeedsandCoping_Score (differences below 1.5 points come from rounding in generation). Vulnerability_Score is a monotonic transform of FinalScore. Vulnerability_Category is a banding of FinalScore: Baja up to about 24, Moderada about 25 to 37, Elevada about 31 to 52, Severa above 52; the bands overlap slightly in the synthetic sample.</p>
+      </div>
+      <div class="prose">
+        <h3>Missing values are "not applicable"</h3>
+        <p>The 925 single-person households (NumIntegrantes = 1) have blank FemaleHeadedHousehold and CuidadorSolo, because the questions are not asked of them. ScoreCOMAR_PIL is blank for 960 rows where the procedure check did not apply. OficinaACNUR is blank for 21 rows. Treat these as structural, not as errors to impute away.</p>
+        <p><strong>What a caseworker sees.</strong> The fields in this file are the fields the Cashy answer engine received. A household's row, rendered as a registration record, is what a caseworker sees on the review screen together with Cashy's reasoning and answer, so the sample is also the raw material for building review-screen stimuli.</p>
+      </div>
+    </div>
+
+    <details class="wide" style="margin-top:32px">
+      <summary>Annex I: data dictionary (26 columns)</summary>
+      <div class="body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Column</th><th>Meaning</th><th>Values in the sample (count)</th></tr></thead>
+            <tbody>
+              <tr><td><code>month</code></td><td>Month of the targeting interview (YYYY-MM)</td><td>2023-06 to 2024-07</td></tr>
+              <tr><td><code>Elegibilidad</code></td><td>Eligibility status recorded by the operation (six values)</td><td>Elegible (414); Elegible por Proceso Acelerado (13); Lista de Reserva, waiting list (451); No Elegible (932); No Elegible por Intenciones (52); No Elegible por Duplicidad (38)</td></tr>
+              <tr><td><code>Vulnerability_Category</code></td><td>Vulnerability band derived from FinalScore</td><td>Vulnerabilidad Baja (775), Moderada (394), Elevada (612), Severa (119)</td></tr>
+              <tr><td><code>Demographics.HH.Head</code></td><td>Factor score: profile of the head of household</td><td>1.0, 1.60, 2.07, 2.70</td></tr>
+              <tr><td><code>Demographics.Language</code></td><td>Factor score: language barrier</td><td>1.0, 1.53, 2.05</td></tr>
+              <tr><td><code>Demographics.Profiles</code></td><td>Factor score: specific-needs profiles in the household</td><td>1.0, 1.25, 2.58, 3.25</td></tr>
+              <tr><td><code>Demographics.Documentation</code></td><td>Factor score: documentation status</td><td>1.0, 1.56, 2.13</td></tr>
+              <tr><td><code>Needs_and_Coping.BasicNeeds</code></td><td>Factor score: unmet basic needs (food, water, hygiene)</td><td>1.0, 1.78</td></tr>
+              <tr><td><code>Needs_and_Coping.Housing</code></td><td>Factor score: housing stability (stable to street or night-only shelter)</td><td>1.0, 1.50, 2.12, 2.82</td></tr>
+              <tr><td><code>Needs_and_Coping.Neg.mechanism</code></td><td>Factor score: negative coping mechanisms</td><td>1.0, 1.79, 2.58</td></tr>
+              <tr><td><code>Needs_and_Coping.Dependency</code></td><td>Factor score: dependency burden</td><td>1.0, 1.04, 1.74, 2.54</td></tr>
+              <tr><td><code>OficinaACNUR</code></td><td>Anonymized code of the UNHCR field office that ran the interview</td><td>sotap (1,278), fupal (190), foten (186), pcr_cdmx (127), futij (47), fomon (36), fusal (15); blank (21)</td></tr>
+              <tr><td><code>NumIntegrantes</code></td><td>Household size (number of members)</td><td>1 to 11; 925 single-person households</td></tr>
+              <tr><td><code>dependencyCategory</code></td><td>Dependency ratio category</td><td>low (1,148), average (610), complete (94), high (48)</td></tr>
+              <tr><td><code>FemaleHeadedHousehold</code></td><td>Sex of the head of household</td><td>jefatura_femenina (484), jefatura_masculina (491); blank for single-person households (925)</td></tr>
+              <tr><td><code>CuidadorSolo</code></td><td>Sole carer of dependents</td><td>si (373), no (602); blank for single-person households (925)</td></tr>
+              <tr><td><code>HablaEspanol</code></td><td>Whether at least one adult speaks Spanish</td><td>espanol_uno_mas_adultos (1,622); espanol_ningun_adulto (278)</td></tr>
+              <tr><td><code>Analfabeta_si</code></td><td>Adult illiteracy in the household</td><td>adultos_ninguno_analfabeta (1,664); adultos_uno_mas_analfabeta (236)</td></tr>
+              <tr><td><code>ScoreCOMAR_PIL</code></td><td>Administrative flag: status in the national asylum procedure</td><td>0 (771), -500 (155), 500 (14); blank where not applicable (960)</td></tr>
+              <tr><td><code>ScoreIntenciones</code></td><td>Administrative flag: stated intentions incompatible with the programme</td><td>0 (1,844), -500 (56)</td></tr>
+              <tr><td><code>ScoreDuplicidad</code></td><td>Administrative flag: duplicate registration</td><td>0 (1,852), -500 (48)</td></tr>
+              <tr><td><code>Demographics_Score</code></td><td>Aggregated demographics score</td><td>0 to 43.8 (mean 8.1)</td></tr>
+              <tr><td><code>NeedsandCoping_Score</code></td><td>Aggregated needs and coping score</td><td>0 to 50.0 (mean 20.1)</td></tr>
+              <tr><td><code>Vulnerability_Score</code></td><td>Vulnerability index, a monotonic transform of FinalScore</td><td>2.0 to 4.34 (mean 2.80)</td></tr>
+              <tr><td><code>FinalScore</code></td><td>Scorecard total: Demographics_Score + NeedsandCoping_Score; the score Cashy reproduces with R&sup2; = 0.9998</td><td>0 to 81.1 (mean 27.7)</td></tr>
+              <tr><td><code>EligibilityTarget</code></td><td>Binary determination derived from Elegibilidad; the target Cashy predicts weakly (67.6% on real data)</td><td>INCLUSION (427), EXCLUSION (1,473)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+    <details>
+      <summary>Other released materials (Data folder)</summary>
+      <div class="body">
+        <p>Where released for the hackathon, the Data folder also contains the participant briefing (S1), the codebook of the open comments (S2), the analysis code (S3), the de-identified assessment-level data (S4, 155 assessments from 31 participants) and principle-ratings data (S5), the model card (S6), the Cashy AutoML code (S7) and the redacted household narratives (S9). Household records and free-text comments are withheld because they could identify participants or households.</p>
+        <p>Full challenge brief: <a href="docs/Data_Instructions_Cashy_Oversight_Challenge.docx">Data &amp; Instructions (DOCX)</a>. Hackathon FAQ: <a href="docs/FAQ.docx">FAQ (DOCX)</a>.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- EXPERIMENT -->
+<section id="experiment">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The experiment, reproduced</h2>
+      <p>Annex II gives the instruments so teams can rebuild the workflow and compare their measurements with the reference values: the two Responsible-AI statement panels, the items answered after each assessment, the post-session principle items, the five households, and the appropriate-reliance decomposition by arm.</p>
+    </div>
+
+    <h3>The five households and the reference results</h3>
+    <p class="muted small" style="max-width:70ch">Five real, already-decided households were selected to vary on vulnerability and on agreement with the Scorecard. Two are concordant (C4, C5), three discordant (C1, C2, C3). C3 was chosen as a hard case: the Scorecard categorized the household as highly vulnerable but excluded it on criteria unrelated to need, so it was excluded from the confirmatory set (C1 and C2).</p>
+    <div class="table-wrap" style="margin-bottom:28px">
+      <table>
+        <thead><tr><th>Case</th><th>Household profile</th><th>Relation (Cashy minus Scorecard)</th><th>Cashy score / recommendation</th><th>Scorecard score / determination</th></tr></thead>
+        <tbody>
+          <tr><td><code>C1</code></td><td>Single adult, collective shelter, several basic needs unmet, one negative coping mechanism</td><td>Discordant, +29.38, Exclusion to Inclusion</td><td class="num">43.09 / Inclusion</td><td class="num">13.71 / Exclusion</td></tr>
+          <tr><td><code>C2</code></td><td>Sole carer with infant, both with serious medical conditions, stable housing, incomplete documentation</td><td>Discordant, -9.88, Inclusion to Exclusion</td><td class="num">25.52 / Exclusion</td><td class="num">35.40 / Inclusion</td></tr>
+          <tr><td><code>C3</code></td><td>Two-parent household, young child with serious medical condition, night-only shelter, high-risk coping</td><td>Discordant (contested), +14.47, Exclusion to Inclusion</td><td class="num">55.54 / Inclusion</td><td class="num">41.07 / Exclusion</td></tr>
+          <tr><td><code>C4</code></td><td>Single adult, collective shelter, all basic needs met, no health condition</td><td>Concordant, -8.59, no change</td><td class="num">15.79 / Exclusion</td><td class="num">24.38 / Exclusion</td></tr>
+          <tr><td><code>C5</code></td><td>Single adult, disability and medical condition preventing work, food/water/hygiene needs unmet</td><td>Concordant, 0.00, no change</td><td class="num">65.57 / Inclusion</td><td class="num">65.57 / Inclusion</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Appropriate-reliance decomposition by arm</h3>
+    <p class="muted small" style="max-width:70ch">Percentages with Wilson 95% CIs. Confirmatory columns use the 62 assessments of C1 and C2; concordant columns the 62 of C4 and C5. An override audit toolkit should reproduce these from the released assessment-level data.</p>
+    <div class="table-wrap" style="margin-bottom:20px">
+      <table>
+        <thead><tr><th>Condition</th><th>Correct override</th><th>Over-reliance</th><th>Correct acceptance</th><th>Under-reliance</th><th>End-to-end accuracy</th></tr></thead>
+        <tbody>
+          <tr><td>Plain AI (13 caseworkers)</td><td class="num">25/26 = 96.2% [81.1, 99.3]</td><td class="num">1/26 = 3.8% [0.7, 18.9]</td><td class="num">26/26 = 100% [87.1, 100]</td><td class="num">0/26 = 0.0% [0.0, 12.9]</td><td class="num">54/65 = 83.1% [72.2, 90.3]</td></tr>
+          <tr><td>Responsible-AI statements (18 caseworkers)</td><td class="num">24/36 = 66.7% [50.3, 79.8]</td><td class="num">12/36 = 33.3% [20.2, 49.7]</td><td class="num">36/36 = 100% [90.4, 100]</td><td class="num">0/36 = 0.0% [0.0, 9.6]</td><td class="num">62/90 = 68.9% [58.7, 77.5]</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose small muted">Participant-level risk difference in correct override: 29.5 percentage points (95% CI 11.9 to 47.0; Mann-Whitney p = .007; GEE OR = 0.080 [0.010, 0.639]). Ratings of identical advice: top-box correctness rose from 7.7% to 27.8% (Holm p = .005) while mean correctness (3.26 against 3.52) and appropriateness did not differ; the reasoning-answer gap on the confirmatory households was +0.81 (plain) against +0.64 (statements), p = .65. Principle ratings by arm (28 linked participants): accountability 3.00 against 3.61 (p = .047, uncorrected), transparency 3.30 against 3.94 (p = .078), fairness 3.20 against 3.28; none survives Holm correction. Minimum detectable effect at 80% power: d = 1.06 for the confirmatory contrast, d = 1.15 for the post-session instrument.</p>
+
+    <div style="margin-top:36px">
+      <details>
+        <summary>The Responsible-AI statements shown in the statements arm</summary>
+        <div class="body">
+          <p><strong>Process-of-Thought. How was the general analysis done?</strong></p>
+          <ol>
+            <li><strong>Data collection:</strong> the most important data were taken from each form: who they are, what documents they hold, their health and disabilities, where they live, whether they can cover their basic needs, how they get by (coping mechanisms), what the interviewer said, and the system's summary of their vulnerability.</li>
+            <li><strong>Key vulnerability factors (implicit weighting):</strong> although no exact points were used, more weight was given to factors that indicate greater vulnerability: serious health problems or disability (especially if they prevent work or there is no support); caring for vulnerable dependents (infants, sick children); being the sole carer; living in a very unstable place (street, night-only shelter); being unable to cover essential needs (food, water, hygiene); using very risky ways to survive (such as begging); lacking valid documents; special risks (being LGBTIQ+, although the risk varies).</li>
+            <li><strong>Comparison:</strong> each case was compared with the others on which vulnerability factors it had, how severe they were, and how they combined.</li>
+            <li><strong>Verification:</strong> the information was checked for consistency and compared with the interviewer's opinion and the system's summary.</li>
+            <li><strong>Recommendations:</strong> who to include or exclude was decided on how vulnerable each case was compared with the others, and the rule of selecting only one or two.</li>
+          </ol>
+          <p><strong>Process-Guarantees.</strong></p>
+          <ul>
+            <li><strong>Transparency:</strong> clear information from standard forms is used; the factors and the reasoning are explained; objective information is distinguished from the interviewer's opinion.</li>
+            <li><strong>Accountability:</strong> official documents are used and this analysis creates a record; the tool is standardized for consistency; "A person reviews and takes the final decision, not the AI".</li>
+            <li><strong>Responsibility:</strong> the AI only helps analyze the information in the forms according to the rules given; the responsible person or committee decides in the end, applying the programme's criteria; the analysis uses no external information.</li>
+          </ul>
+          <p>Neither panel contained anything about the household under review. Process-of-Thought described the language model's reading of the case, not the scoring engine that produced the score and recommendation. The two panels were always shown together, so their separate effects are unknown.</p>
+        </div>
+      </details>
+      <details class="wide">
+        <summary>The review screen and the seven items answered after each assessment</summary>
+        <div class="body">
+          <p>Order on screen: registration record; Reasoning (a narrative of about 400 words in seven fixed parts: summary; possible contradictions or biases in the record; possible inconsistencies; reasons for inclusion; reasons for exclusion; relative vulnerability rating; final recommendation); statements (statements arm only); Answer (score, category, recommendation); then the items below. The Scorecard's determination was withheld until after submission, when a comparison screen presented it and the caseworker accepted or overrode it in turn.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Item</th><th>Wording</th><th>Response</th></tr></thead>
+              <tbody>
+                <tr><td><code>EC1</code></td><td>Rate the effectiveness of Cashy-AI for identifying and selecting the "right" individuals for the assistance</td><td>1 to 5</td></tr>
+                <tr><td><code>EC2</code></td><td>Do you agree or disagree with Cashy-AI's final recommendation for this case?</td><td>Agree / Disagree</td></tr>
+                <tr><td><code>EC3</code></td><td>Why do you disagree? Select all that apply (if Disagree)</td><td>Inaccurate or incorrect information; Irrelevant or incomplete information; Not appropriate or unexpected result; Unfair or unjust decision; Disrespects staff autonomy to change the decision; Lack of transparency or explainability; Unclear roles between staff and tool</td></tr>
+                <tr><td><code>EC4</code></td><td>Do you want to override Cashy-AI's final recommendation? (if Disagree)</td><td>Yes / No</td></tr>
+                <tr><td><code>EC5</code></td><td>Does Cashy-AI provide a correct and accurate recommendation? (correctness)</td><td>Completely inaccurate (1) to Completely accurate (5)</td></tr>
+                <tr><td><code>EC6</code></td><td>Does Cashy-AI provide content that is relevant to help you make an informed decision? (relevance)</td><td>Strongly disagree (1) to Strongly agree (5)</td></tr>
+                <tr><td><code>EC7</code></td><td>Does Cashy-AI provide a recommendation that is appropriate to the vulnerability profile of the case? (appropriateness)</td><td>Very inappropriate (1) to Very appropriate (5)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:12px">Over-reliance is defined by EC4. The reasoning-answer gap is EC6 minus EC5 on the same assessment; a positive gap means the reasoning was rated above the answer.</p>
+        </div>
+      </details>
+      <details class="wide">
+        <summary>Post-session principles questionnaire (five UN AI principles)</summary>
+        <div class="body">
+          <p>One item per principle, five-point labelled scale scored 1 to 5, followed by a required open comment. Forms were matched to assessments through the participant's self-selected name.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Principle</th><th>Item</th><th>Labels 1 to 5</th></tr></thead>
+              <tbody>
+                <tr><td>Do no harm</td><td>Where does Cashy-AI fall on the following harm scale?</td><td>Actively harmful; Lacks safeguards; Basic safety; Minimizes harm; Proactively protective</td></tr>
+                <tr><td>Fairness and non-discrimination</td><td>Based on your analysis, where does Cashy-AI fall on the following fairness scale?</td><td>Discriminatory; Potentially biased; Mixed fairness; Largely fair; Highly fair</td></tr>
+                <tr><td>Human autonomy and oversight</td><td>Evaluate Cashy-AI's impact on human autonomy using the scale below.</td><td>Undermines staff autonomy; Limits staff autonomy; Basic staff autonomy; Respects staff autonomy; Enhances staff autonomy</td></tr>
+                <tr><td>Transparency and explainability</td><td>How transparent and explainable is Cashy-AI?</td><td>Opaque; Limited transparency; Partial transparency; Largely transparent; Fully transparent</td></tr>
+                <tr><td>Responsibility and accountability</td><td>Based on the oversight and the clarity of defined human responsibilities, where does Cashy-AI fall on the following accountability scale?</td><td>Unaccountable; Weak accountability; Basic accountability; Good accountability; Strong accountability</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+      <details>
+        <summary>Annex III: open research questions</summary>
+        <div class="body">
+          <ul>
+            <li>Which on-screen cues change what a caseworker does with a flawed recommendation, and which change only what they say about it? Can the Process-of-Thought and Process-Guarantees effects be separated?</li>
+            <li>Is the reasoning-answer rating gap a usable individual-level flag for at-risk assessments, or only a group-level signal? What would make it sensitive enough to log in production?</li>
+            <li>What is the smallest override audit (cases and caseworkers) that detects a 15-point fall in correct override at 80% power, and how should cases be chosen so that error direction is not confounded with case?</li>
+            <li>How should override be recorded and monitored in production so that a falling rate is visible to a named owner, without turning override itself into a performance target?</li>
+            <li>Can a model built on the synthetic sample expose, per case, which parts of the recommendation the features support (score, category) and which they do not (eligibility), and does showing that distinction change reliance?</li>
+            <li>How can principle ratings, model cards and checklists be combined with behavioral evidence so that a self-assessment cannot rate a system well while its users override it less?</li>
+            <li>What does an evaluation of the workflow look like from the side of the household that never sees the decision, and how could displaced people participate in setting the override standard?</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section id="rules">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Requirements</h2>
+      <p>Ideally your design should meet these requirements. Annex IV of the brief lists the ethical and human-rights considerations that apply to assistance-targeting data and to AI-assisted decisions over vulnerable populations.</p>
+    </div>
+    <ul class="reqs">
+      <li><strong>Synthetic data only.</strong> Work exclusively on the synthetic sample and the released materials; do not attempt to reconstruct, link or re-identify households, caseworkers or offices. Present results as properties of the synthetic sample.</li>
+      <li><strong>Reasoning and answer kept apart.</strong> Any prototype or screen must present the system's reasoning and its recommendation as separate outputs and record the caseworker's judgment of each. "I agree" must not be accepted as a single act.</li>
+      <li><strong>Reliance decomposed.</strong> Report correct override, over-reliance, correct acceptance and under-reliance separately, on concordant and discordant cases, with Wilson or equivalent confidence intervals. Never a single agreement or accuracy rate alone.</li>
+      <li><strong>Reference standard named.</strong> "Correct" means agreement with the operation's own recorded determination, the standard caseworkers are accountable to. State that it is not ground truth about the household's need.</li>
+      <li><strong>Clustering and power.</strong> Assessments from the same caseworker are not independent; analyze at the participant level or with participant-clustered models, and report the minimum detectable effect rather than post hoc power.</li>
+      <li><strong>Modeling approach.</strong> If you build a model, document it (a model card is the expected format), report inclusion and exclusion recall separately, and say which decisions the features can and cannot support.</li>
+    </ul>
+
+    <h3 style="margin-top:48px">Deliverables</h3>
+    <ol class="steps">
+      <li><h4>A repository</h4><p>Code and a README that another operation could run.</p></li>
+      <li><h4>A five-minute demo</h4><p>Show the workflow, the measurement and what the institution would see.</p></li>
+      <li><h4>A two-page note</h4><p>The contrast you propose to test, the outcome measure, the sample needed, and what a positive and a negative result would mean for the operation.</p></li>
+    </ol>
+
+    <div class="cols" style="margin-top:48px">
+      <div class="prose">
+        <h3>Three points apply to every submission</h3>
+        <p>The households whose data shaped the corpus never see the decisions made about them and cannot contest them, so any design must say where a wrong recommendation would be caught. The caseworkers are a small professional population and must not be identifiable from any analysis. A reference determination is the institution's standard, not the truth about a household's need.</p>
+      </div>
+      <div class="prose">
+        <h3>Feasibility in the operation's stack</h3>
+        <p>KoboToolbox forms, Python, and Power BI as the reporting standard. Solutions are judged on cost and maintainability by an information-management team, and on reproducibility: code and instructions that another operation could run.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVALUATION -->
+<section id="evaluation">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>How projects are judged</h2>
+      <p>Four criteria. A technically impressive solution that fails to address the humanitarian problem will not perform well; a simple but practical, human-centred and feasible solution may score highly.</p>
+    </div>
+    <div class="criteria">
+      <div class="criterion"><div class="pct">25%</div><h4>Challenge</h4><p>Understanding of the humanitarian challenge and the role of human oversight.</p><div class="bar"><i style="width:25%"></i></div></div>
+      <div class="criterion"><div class="pct">20%</div><h4>Novelty</h4><p>Originality and innovation.</p><div class="bar"><i style="width:20%"></i></div></div>
+      <div class="criterion"><div class="pct">20%</div><h4>Community impact</h4><p>Consideration of affected populations, users and responsible AI principles.</p><div class="bar"><i style="width:20%"></i></div></div>
+      <div class="criterion"><div class="pct">35%</div><h4>Solution</h4><p>Feasibility, scalability, usability and implementation potential.</p><div class="bar"><i style="width:35%"></i></div></div>
+    </div>
+    <p class="prose muted" style="margin-top:28px">The challenge poser also weighs fidelity to the research question; rigor of measurement (reliance decomposed rather than a single agreement rate, participants treated as the unit of randomization, confidence intervals reported); explainability and separation of reasoning from answer; feasibility in the operation's stack; do-no-harm (no real household data, no assistance at stake, no identification of caseworkers); cost and maintainability; and reproducibility.</p>
+  </div>
+</section>
+
+<!-- LOGISTICS -->
+<section id="logistics">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Event</h2>
+      <p>Organized by UNHCR Innovation and the University of Trento. Around 50 participants are expected, with mentors from the organizers, technical experts and UNHCR staff, and dedicated Q&amp;A sessions with the UNHCR team.</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="k">Dates</div><div class="v"><span class="todo">TODO dates</span></div></div>
+      <div class="fact"><div class="k">Venue</div><div class="v"><span class="todo">TODO venue</span></div></div>
+      <div class="fact"><div class="k">Duration</div><div class="v">48 to 72 hours</div></div>
+      <div class="fact"><div class="k">Registration</div><div class="v"><span class="todo">TODO link + deadline</span></div></div>
+    </div>
+    <p class="muted small" style="margin-top:16px">Final submission requirements will be shared during the event. Teams should expect to submit a prototype, concept or framework; a short presentation or pitch; documentation explaining the solution; and a brief explanation of how impact would be measured.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>FAQ</h2>
+    </div>
+    <div class="cols" style="gap:0 48px">
+      <div>
+        <details><summary>Do I need to be a programmer or data scientist?</summary><div class="body"><p>No. The hackathon is intentionally multidisciplinary. Computer science, data science, sociology, international relations, law, psychology, design, communications and the humanities can all contribute meaningfully. Evaluation is not based solely on technical sophistication.</p></div></details>
+        <details><summary>Is this an AI hackathon?</summary><div class="body"><p>Partially. Teams may use AI, machine learning, analytics, design methods, governance approaches, monitoring tools, experimentation frameworks or other methods. The objective is not simply to build AI, but to solve the humanitarian problem presented in the challenge.</p></div></details>
+        <details><summary>Do we need to improve the AI model?</summary><div class="body"><p>Not necessarily. Improving model performance may be part of a solution, but it is not the primary objective. Strong solutions focus on human oversight, decision support, user experience, monitoring mechanisms, governance, accountability and responsible AI design rather than only increasing predictive accuracy.</p></div></details>
+        <details><summary>Can we propose a governance or process solution instead of software?</summary><div class="body"><p>Yes. Solutions may include digital prototypes, dashboards, evaluation frameworks, governance mechanisms, oversight processes, human-centred design approaches and testing methodologies. A fully implemented software product is not required.</p></div></details>
+        <details><summary>What does a strong submission look like?</summary><div class="body"><p>It understands the humanitarian problem, protects meaningful human oversight, demonstrates responsible AI principles, is feasible to implement, can be maintained realistically, and includes a clear method to measure effectiveness. Strong submissions focus on people, processes and outcomes rather than technology alone.</p></div></details>
+        <details><summary>Does the solution need to be production-ready?</summary><div class="body"><p>No. The goal is to explore, test and demonstrate ideas that could be developed further, not to deploy a complete enterprise solution within two days.</p></div></details>
+      </div>
+      <div>
+        <details><summary>Is the data real?</summary><div class="body"><p>No. The dataset contains synthetic records created from historical patterns. It does not contain real individuals and should not be interpreted as a representation of actual operational distributions.</p></div></details>
+        <details><summary>Can we use external datasets?</summary><div class="body"><p>Yes, provided their use is clearly documented and they do not introduce privacy, security, licensing or ethical concerns. Explain how external data contributes to solving the challenge.</p></div></details>
+        <details><summary>Can we use generative AI?</summary><div class="body"><p>Yes, provided you acknowledge its use, understand its limitations, remain accountable for outputs, and respect ethical and responsible AI principles. Using AI tools gives no automatic advantage in evaluation.</p></div></details>
+        <details><summary>Why is human oversight important?</summary><div class="body"><p>Humanitarian decisions can directly affect individuals' access to assistance and services. Technology may support decision-making, but responsibility remains with people. Effective human oversight helps reduce risks, identify errors and promote accountability. Human-in-the-loop means a person remains involved in reviewing, interpreting and taking responsibility for decisions supported by technology.</p></div></details>
+        <details><summary>What humanitarian principles should guide our work?</summary><div class="body"><p>Protection, Accountability to Affected Populations, inclusion, fairness, transparency, human oversight, data responsibility and do no harm. Do no harm means avoiding new risks or worsening existing ones: consider unintended consequences, exclusion risks and potential misuse of your solution.</p></div></details>
+        <details><summary>Will technical projects automatically score higher?</summary><div class="body"><p>No. A technically impressive solution that fails to address the humanitarian problem will not perform well. A simple but practical, human-centred and feasible solution may score highly. Social, legal, design and humanitarian insights count alongside technical expertise.</p></div></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Reading list</h2>
+      <p>Recommended before working with assistance-targeting data and designing AI-assisted decisions over vulnerable populations.</p>
+    </div>
+    <div class="resources">
+      <div>
+        <h4>Humanitarian targeting and institutional AI principles</h4>
+        <ul>
+          <li><a href="https://www.unhcr.org/digitalstrategy/ai-approach/">UNHCR AI Approach</a> <span>(2025)</span></li>
+          <li><a href="https://unsceb.org/products/principles-ethical-use-artificial-intelligence-united-nations-system/">UN-CEB. Principles for the Ethical Use of AI in the UN System</a> <span>(2022)</span></li>
+          <li><a href="https://www.unhcr.org/media/unhcr-wfp-joint-principles-targeting-assistance-meet-food-and-other-basic-needs">UNHCR and WFP. Joint Principles on Targeting Assistance</a> <span>(2020)</span></li>
+          <li><a href="https://www.unhcr.org/handbooks/assessment/use/mapping-targeting-and-prioritization-approaches">UNHCR. Mapping of Targeting and Prioritization Approaches</a> <span>(2023)</span></li>
+          <li><a href="https://www.essentialtech.ch/reports">ICRC and EPFL. From Principles to Practice: AI in Humanitarian Organizations</a> <span>(2026)</span></li>
+          <li><a href="https://doi.org/10.1038/s41586-022-04484-9">Aiken et al. Machine learning and phone data can improve targeting of humanitarian aid. Nature</a> <span>(2022)</span></li>
+          <li><a href="https://doi.org/10.1186/s41018-021-00096-6">Coppi, Moreno Jimenez and Kyriazi. Explicability of humanitarian AI. JIHA</a> <span>(2021)</span></li>
+          <li><a href="https://doi.org/10.1007/s00146-024-01886-3">Scantamburlo, Baumann and Heitz. On prediction-modelers and decision-makers. AI &amp; Society</a> <span>(2024)</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Appropriate reliance, over-reliance and oversight</h4>
+        <ul>
+          <li><a href="https://doi.org/10.1145/3776528">Eckhardt et al. A Survey of AI Reliance. ACM Computing Surveys</a> <span>(2026)</span></li>
+          <li><a href="https://doi.org/10.1007/978-981-97-8440-0_98-1">Passi, Dhanorkar and Vorvoreanu. Addressing Overreliance on AI</a> <span>(2025)</span></li>
+          <li><a href="https://doi.org/10.1145/3630106.3658901">Guo et al. A Decision Theoretic Framework for Measuring AI Reliance. FAccT</a> <span>(2024)</span></li>
+          <li><a href="https://doi.org/10.1145/3581641.3584066">Schemmer et al. Appropriate Reliance on AI Advice. IUI</a> <span>(2023)</span></li>
+          <li><a href="https://doi.org/10.1145/3411764.3445562">Lu and Yin. Human Reliance on ML Models When Performance Feedback is Limited. CHI</a> <span>(2021)</span></li>
+          <li><a href="https://doi.org/10.1145/3449287">Bu&ccedil;inca, Malaya and Gajos. To Trust or to Think. CSCW</a> <span>(2021)</span></li>
+          <li><a href="https://doi.org/10.1145/3579605">Vasconcelos et al. Explanations Can Reduce Overreliance on AI Systems. CSCW</a> <span>(2023)</span></li>
+          <li><a href="https://doi.org/10.1002/aaai.12182">Fok and Weld. In search of verifiability. AI Magazine</a> <span>(2024)</span></li>
+          <li><a href="https://doi.org/10.1145/3290607.3312787">Eiband et al. The Impact of Placebic Explanations on Trust. CHI EA</a> <span>(2019)</span></li>
+          <li><a href="https://doi.org/10.1038/s41746-021-00385-9">Gaube et al. Do as AI say. npj Digital Medicine</a> <span>(2021)</span></li>
+          <li><a href="https://doi.org/10.1016/j.clsr.2022.105681">Green. The flaws of policies requiring human oversight of government algorithms</a> <span>(2022)</span></li>
+          <li><a href="https://doi.org/10.1038/s42256-019-0114-4">Mittelstadt. Principles alone cannot guarantee ethical AI. Nature MI</a> <span>(2019)</span></li>
+          <li><a href="https://doi.org/10.1145/3351095.3372873">Raji et al. Closing the AI accountability gap. FAT*</a> <span>(2020)</span></li>
+          <li><a href="https://doi.org/10.1145/3287560.3287596">Mitchell et al. Model Cards for Model Reporting. FAT*</a> <span>(2019)</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ethical and human-rights considerations</h4>
+        <ul>
+          <li><a href="https://reliefweb.int/report/world/generative-ai-humanitarians-september-2023">Generative AI for Humanitarians</a> <span>(2023)</span></li>
+          <li><a href="https://doi.org/10.1017/S1816383121000011">Pizzi, Romanoff and Engelhardt. AI for humanitarian action: Human rights and ethics. IRRC</a> <span>(2020)</span></li>
+          <li><a href="https://doi.org/10.1017/S1816383122000261">Beduschi. Harnessing the potential of AI for humanitarian action. IRRC</a> <span>(2022)</span></li>
+          <li><a href="https://www.frontiersin.org/articles/10.3389/fdata.2023.1082787/full">NLP for humanitarian action. Frontiers in Big Data</a> <span>(2023)</span></li>
+          <li><a href="https://doi.org/10.1080/0960085X.2022.2026621">Mikalef et al. Thinking responsibly about responsible AI. EJIS</a> <span>(2022)</span></li>
+          <li><a href="https://doi.org/10.1145/3722548">Moore et al. Concerning the Responsible Use of AI in the U.S. Criminal Justice System. CACM</a> <span>(2025)</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Challenge poser and stakeholders</h2>
+      <p><a href="https://www.unhcr.org/innovation/data-innovation/">UNHCR's Innovation Service</a> creates an enabling environment for innovation to flourish in UNHCR by equipping staff with the knowledge, resources and skills to draw on structured innovation to solve the most pressing challenges, with safe spaces for experimentation in field operations and at Headquarters.</p>
+    </div>
+    <div class="people">
+      <div class="person">
+        <div class="name">Moises Maldonado Alonso</div>
+        <div class="role">AI and Data Science Lead, UNHCR Innovation. Challenge contact.</div>
+        <a href="mailto:maldonam@unhcr.org">maldonam@unhcr.org</a>
+      </div>
+      <div class="person">
+        <div class="name">UNHCR Innovation Service</div>
+        <div class="role">Data innovation, challenge poser.</div>
+        <a href="https://www.unhcr.org/innovation/data-innovation/">unhcr.org/innovation</a>
+      </div>
+      <div class="person">
+        <div class="name">University of Trento</div>
+        <div class="role">Co-organizer of the Data &amp; Innovation for Refugee Inclusion Hackathon.</div>
+        <span class="todo">TODO link + contact</span>
+      </div>
+    </div>
+    <div class="table-wrap" style="margin-top:28px">
+      <table>
+        <thead><tr><th>Stakeholder</th><th>Role</th><th>Link</th></tr></thead>
+        <tbody>
+          <tr><td>UNHCR</td><td>Institutional AI approach: transparent use of AI, always with human oversight</td><td><a href="https://www.unhcr.org/digitalstrategy/ai-approach/">unhcr.org/digitalstrategy/ai-approach</a></td></tr>
+          <tr><td>UNHCR and WFP</td><td>Joint Principles on Targeting Assistance to Meet Food and Other Basic Needs</td><td><a href="https://www.unhcr.org/media/unhcr-wfp-joint-principles-targeting-assistance-meet-food-and-other-basic-needs">Joint Principles</a></td></tr>
+          <tr><td>UNHCR</td><td>Mapping of Targeting and Prioritization Approaches (how cash targeting is done)</td><td><a href="https://www.unhcr.org/handbooks/assessment/use/mapping-targeting-and-prioritization-approaches">Handbook</a></td></tr>
+          <tr><td>UN System Chief Executives Board</td><td>Principles for the Ethical Use of AI in the UN System (the five principles rated in the study)</td><td><a href="https://unsceb.org/products/principles-ethical-use-artificial-intelligence-united-nations-system/">unsceb.org</a></td></tr>
+          <tr><td>ICRC, EPFL, ETH Zurich</td><td>From Principles to Practice: AI in Humanitarian Organizations (AI Alignment Guide, 2026)</td><td><a href="https://www.essentialtech.ch/reports">essentialtech.ch/reports</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Cashy Oversight Challenge. UNHCR Innovation and the University of Trento. Synthetic data only; no real household is represented on this site.</div>
+    <div><a href="docs/Data_Instructions_Cashy_Oversight_Challenge.docx">Challenge brief</a> &nbsp;&middot;&nbsp; <a href="docs/FAQ.docx">FAQ</a> &nbsp;&middot;&nbsp; <a href="mailto:maldonam@unhcr.org">Contact</a></div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

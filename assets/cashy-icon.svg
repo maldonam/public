@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Cashy placeholder mark">
+  <!-- Placeholder mark for Cashy. Replace with the official icon when available. -->
+  <rect x="0" y="0" width="128" height="128" rx="28" fill="#0B5FA5"/>
+  <!-- Open ring: the recommendation -->
+  <path d="M92 46 A34 34 0 1 0 92 82" fill="none" stroke="#F4F7FA" stroke-width="14" stroke-linecap="round"/>
+  <!-- Human check: the caseworker's override -->
+  <path d="M66 66 L78 78 L104 50" fill="none" stroke="#F4F7FA" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
