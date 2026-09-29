@@ -286,3 +286,48 @@ details.wide .body { max-width: none; }
 footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--ink-3); font-size: .88rem; }
 footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 footer a { color: var(--ink-2); }
+
+/* Targeting flow: interview to cash (5 steps) */
+.flow { counter-reset: flow; list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.flow li { counter-increment: flow; position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 16px 18px; }
+.flow li::before { content: counter(flow); display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-family: var(--mono); font-size: .8rem; font-weight: 600; margin-bottom: 10px; }
+.flow li:not(:last-child)::after { content: "\2192"; position: absolute; right: -13px; top: 18px; color: var(--ink-3); font-size: 1rem; background: var(--bg); line-height: 1; padding: 2px 0; }
+.flow li.ai { background: var(--accent-soft); border-color: transparent; }
+.flow h4 { margin-bottom: 6px; font-size: 1rem; }
+.flow p { margin: 0; color: var(--ink-2); font-size: .9rem; line-height: 1.5; }
+@media (max-width: 1000px) { .flow { grid-template-columns: 1fr; gap: 10px; } .flow li { display: grid; grid-template-columns: 26px 1fr; column-gap: 14px; } .flow li::before { grid-row: span 2; margin: 0; } .flow li:not(:last-child)::after { content: none; } }
+
+/* Two challenge questions */
+.questions { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.questions .question { margin: 0; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent-2); }
+.questions .question.core { background: var(--accent-soft); border-color: transparent; border-left-color: var(--accent); }
+.questions .question p { font-size: clamp(1.1rem, 1.7vw, 1.3rem); }
+.questions .why { margin-top: 14px; color: var(--ink-2); font-size: .93rem; }
+@media (max-width: 900px) { .questions { grid-template-columns: 1fr; } }
+
+/* Key definitions (Annex I) */
+.defs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px; }
+.def { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent-2); border-radius: var(--radius); padding: 18px 20px; }
+.def.target { border-top-color: var(--accent); background: var(--accent-soft); }
+.def.missing { border-top-color: var(--warn); }
+.def .k { font-size: .8rem; color: var(--ink-3); margin-bottom: 6px; }
+.def .k code { font-family: var(--mono); font-size: .85rem; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; color: var(--ink); }
+.def h4 { margin-bottom: 6px; }
+.def p { margin: 0; color: var(--ink-2); font-size: .92rem; }
+.def p code { font-family: var(--mono); font-size: .82em; }
+@media (max-width: 900px) { .defs { grid-template-columns: 1fr; } }
+
+/* Data dictionary table */
+#annex-1 { margin-top: 8px; }
+.dict tr.group td { background: var(--surface-2); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2); font-weight: 600; padding-top: 12px; }
+.dict td:nth-child(2) { font-weight: 600; white-space: nowrap; }
+.dict tr.absent td { color: var(--ink-3); font-style: italic; }
+@media (max-width: 700px) { .dict td:nth-child(2) { white-space: normal; } }
+
+/* Reading list as accordions */
+.refs { list-style: none; padding: 0 !important; margin: 0; }
+.refs li { padding: 5px 0; font-size: .93rem; line-height: 1.45; }
+.refs li a { color: var(--ink); }
+.refs li span { color: var(--ink-3); }
+
+@media (max-width: 520px) { .btn { white-space: normal; text-align: center; } }
