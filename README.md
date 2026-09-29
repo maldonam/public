@@ -2,14 +2,14 @@
 
 Static site for the UNHCR Innovation challenge on human oversight of AI-supported cash assistance targeting, part of the Data & Innovation for Refugee Inclusion Hackathon (UNHCR Innovation and the University of Trento).
 
-No build step. Plain HTML, CSS and a small script that draws the data charts as inline SVG.
+No build step. Plain HTML, CSS and a small script for the mobile menu.
 
 ## Structure
 
 ```
 index.html                      the whole site (one page, anchored sections)
 assets/style.css                styles, colour tokens, light and dark mode
-assets/site.js                  mobile nav + charts (summary stats embedded)
+assets/site.js                  mobile nav (+ unused chart code, see below)
 assets/cashy-icon.svg           Cashy mark (placeholder, see below)
 assets/favicon.svg
 data/S8.synthetic_cashy_sample.csv   the synthetic sample (1,900 rows, 26 columns)
@@ -40,14 +40,11 @@ Search `index.html` for `TODO`. Each one is a dashed placeholder visible on the 
 
 ## Charts
 
-The five charts on the Data section are drawn from summary counts embedded in `assets/site.js`. To recompute them after changing the CSV:
+The data charts were taken off the page after review (they highlighted inclusion against exclusion, which invites benchmarking eligibility on synthetic data). The drawing code and `STATS` remain in `assets/site.js` and do nothing unless an element with `data-chart` is added back. `scripts/summarize.py` still recomputes the statistics from the CSV.
 
-```
-pip install pandas
-python scripts/summarize.py data/S8.synthetic_cashy_sample.csv
-```
+## Data dictionary
 
-and paste the printed object over `STATS` in `assets/site.js`.
+Annex I sits in the Data section (`#annex-1`). It keeps the operation's original column names, adds an English name for each, translates Spanish values, and defines the final score, the eligibility target (ground truth, funding-driven) and interviewer perception, which has no column in the S8 sample.
 
 ## Data note
 
